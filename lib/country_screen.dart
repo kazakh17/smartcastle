@@ -61,9 +61,9 @@ Future getCountries()async{
 
             title: Text(countries[index].name!.common!),
             children: [
-              Text('Астанасы:${(countries[index].capital!.first)}'),
+              Text('Столица:${(countries[index].capital!.first)}'),
               Text('Халык саны:${(countries[index].population)} чел'),
-              Text('Площадь:${(countries[index].area)} км2')], );
+              Text('Жалпы аланы:${(countries[index].area)} км2')], );
           }),
 
           
