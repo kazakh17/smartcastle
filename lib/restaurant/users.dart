@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lesson7/restaurant_details.dart';
+import 'package:lesson7/restaurant/restaurant_details.dart';
 
 class Users extends StatefulWidget {
   const Users({super.key});

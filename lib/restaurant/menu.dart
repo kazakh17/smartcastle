@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lesson7/users.dart';
+import 'package:lesson7/restaurant/users.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
