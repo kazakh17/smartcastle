@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lesson7/Profile.dart';
+import 'package:lesson7/profile77.dart';
 import 'package:lesson7/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,9 +14,47 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
-  TextEditingController login = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController loginController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool hidePassword = true;
+
+  bool loading = false;
+
+  Future signin() async{
+    setState(() {
+      loading = true;
+    });
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: loginController.text,
+        password: passwordController.text);
+
+        Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Profile(
+                                    name: '',
+                                    familya: '',
+                                    Ot4estvo: '',
+                                    emeil: '',
+                                    phone: '',
+                                    city: '',)));
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 4),
+          content: Text (e.code),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(60)),
+          ),)
+      );
+    }
+    setState(() {
+      loading = false;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,14 +70,14 @@ class _LoginState extends State<Login> {
           child: Column(
             children: [
               TextFormField(
-                controller: login,
+                controller: loginController,
                 decoration: InputDecoration(
                     labelText: 'Логин',
                     hintText: 'Напишите логин',
                     prefixIcon: Icon(Icons.login),
                     suffixIcon: IconButton(
                         onPressed: () {
-                          login.clear();
+                          loginController.clear();
                         },
                         icon: Icon(Icons.delete)),
                     border: OutlineInputBorder(
@@ -58,7 +98,7 @@ class _LoginState extends State<Login> {
                 height: 20,
               ),
               TextFormField(
-                controller: password,
+                controller: passwordController,
                 decoration: InputDecoration(
                     labelText: 'Пароль',
                     hintText: 'Напишите пароль',
@@ -91,26 +131,13 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 20,
               ),
+
+              loading == true?
+              Center(child: CircularProgressIndicator()) :
               ElevatedButton(
                   onPressed: () async {
                     if (_formkey.currentState!.validate()) {
-                      SharedPreferences sp =
-                          await SharedPreferences.getInstance();
-                      sp.setString('Login', login.text);
-                      // ignore: use_build_context_synchronously
-
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Profile(
-                                    name: login.text,
-                                    familya: '',
-                                    Ot4estvo: '',
-                                    emeil: '',
-                                    phone: '',
-                                    city: '',
-                                  )));
+                      signin();
                     } else {
                       showDialog(
                           context: context,
@@ -144,9 +171,11 @@ class _LoginState extends State<Login> {
                           });
                     }
                   },
+                  
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white10,
                   ),
+                  
                   child: Text('Войти')),
               SizedBox(
                 height: 10,
