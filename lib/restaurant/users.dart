@@ -10,7 +10,7 @@ class Users extends StatefulWidget {
 }
 
 class _UsersState extends State<Users> {
-  List<DocumentSnapshot> restaurants= [];
+  List<DocumentSnapshot> restaurants = [];
   TextEditingController nameController = TextEditingController();
   bool loading = false;
 
@@ -52,45 +52,80 @@ class _UsersState extends State<Users> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      loading == true?
-      Center(child: CircularProgressIndicator()):
-       RefreshIndicator(
-        onRefresh: () async{
-          getUsers();
-        },
-         child: ListView.builder(
-            itemCount: restaurants.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: InkWell(
-                    onTap: () {
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RestaurantDetails(
-                            name: restaurants[index]['name'], 
-                            rating: restaurants[index]['rating'],
-                            phone: restaurants[index]['phone'],
-                            ),),);
-                      
-                    },
-                    child: Container(
-                      color: Colors.orange,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(restaurants[index]['name']),
-                          Text(restaurants[index]['rating']),
-                        ],
+      body: loading == true
+          ? Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: () async {
+                getUsers();
+              },
+              child: ListView.builder(
+                  itemCount: restaurants.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RestaurantDetails(
+                                name: restaurants[index]['name'],
+                                rating: restaurants[index]['rating'],
+                                photo: restaurants[index]['image'],
+                                adres: restaurants[index]['adres'],
+                                opisanie: restaurants[index]['opisanie'],
+                                phone: restaurants[index]['phone'],
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 233, 229, 229),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                                child: Image.network(
+                                  restaurants[index]['image'],
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      restaurants[index]['name'],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 23),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                    ),
+                                    Text(
+                                      restaurants[index]['rating'],
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 23,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ));
-            }),
-       ),
+                    );
+                  }),
+            ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: (() {
       //     showDialog(

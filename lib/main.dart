@@ -9,12 +9,12 @@ import 'package:lesson7/country_screen.dart';
 import 'package:lesson7/domashka1.dart';
 import 'package:lesson7/gridview.dart';
 import 'package:lesson7/login.dart';
-import 'package:lesson7/menu.dart';
+import 'package:lesson7/restaurant/menu.dart';
 import 'package:lesson7/news.dart';
 import 'package:lesson7/notes.dart';
 import 'package:lesson7/profile77.dart';
 import 'package:lesson7/recept_screen.dart';
-import 'package:lesson7/users.dart';
+import 'package:lesson7/restaurant/users.dart';
 import 'package:lesson7/weater_screen.dart';
 import 'package:lesson7/zametki.dart';
 

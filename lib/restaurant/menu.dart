@@ -18,7 +18,7 @@ class _MenuState extends State<Menu> {
   ];
 
   List<Widget> bottomWidgets = [
-    Text('Главная'),
+    Users(),
     Text('Сообщения'),
     Text('Профиль'),
   ];

@@ -4,7 +4,11 @@ class RestaurantDetails extends StatefulWidget {
   String name;
   String rating;
   String phone;
-   RestaurantDetails({super.key, required this.name, required this.rating,required this.phone,  });
+  String photo;
+  String adres;
+  String opisanie;
+
+   RestaurantDetails({super.key, required this.name, required this.rating,required this.phone, required this.photo,required this.adres,required this.opisanie,   });
 
   @override
   State<RestaurantDetails> createState() => _RestaurantDetailsState();
@@ -17,24 +21,20 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
       appBar: AppBar(
         title: Text (widget.name),backgroundColor: Colors.blue,
       ),
-      body: Column(
-        children: [
-          // Stack(
-          //   children: [
-          //     Image.network(widget.image),
-              
-          //     Positioned(
-          //       top: 10,
-          //       right: 10,
-          //       child: Text(widget.rating, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),))
-          //   ],
-          // ),
-          Text(widget.name),
-          Text('рейтинг: ${widget.rating}'),
-          Text('phone: ${widget.phone}'),
-          
-
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.network(widget.photo),
+            Text(widget.name),
+            Text('рейтинг: ${widget.rating}'),
+            
+            Text('Aдрес: ${widget.adres}'),
+            Text('${widget.opisanie}',style: TextStyle(fontSize: 16),),
+            Text('Контакты: ${widget.phone}'),
+          ],
+        ),
       ),
       
     );
